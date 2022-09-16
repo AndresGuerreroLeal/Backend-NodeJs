@@ -8,6 +8,9 @@ function setupModels(sequelize) {
   Character.init(CharacterSchema, Character.config(sequelize));
   Gender.init(GenderSchema, Gender.config(sequelize));
   Movie.init(MovieSchema, Movie.config(sequelize));
+
+  Movie.associate(sequelize.models);
+  Gender.associate(sequelize.models);
 }
 
 module.exports = setupModels;
