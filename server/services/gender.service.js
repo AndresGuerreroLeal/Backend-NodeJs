@@ -7,7 +7,7 @@ class GenderService {
   }
 
   async find() {
-    const genders = models.Gender.findAll();
+    const genders = models.Gender.findAll({ include: ['movies'] });
     return genders;
   }
 }

@@ -9,7 +9,7 @@ class MovieService {
   }
 
   async find() {
-    const movies = models.Movie.findAll();
+    const movies = models.Movie.findAll({ include: ['gender'] });
     return movies;
   }
 
