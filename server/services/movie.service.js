@@ -22,7 +22,7 @@ class MovieService {
   }
 
   async update(id, changes) {
-    const movie = this.findOne(id);
+    const movie = await this.findOne(id);
     const rta = movie.update(changes);
     return rta;
   }

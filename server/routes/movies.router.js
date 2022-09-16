@@ -1,5 +1,6 @@
 const router = require('express').Router();
 
+const MovieService = require('../services/movie.service');
 const validatorHandler = require('../middleware/validator.handler');
 const {
   createMovieSchema,
@@ -7,10 +8,70 @@ const {
   getMovieSchema,
 } = require('../schemas/movie.schema');
 
-router.get('/', async (req, res) => {});
-router.post('/', validatorHandler(createMovieSchema, 'body'), (req, res) => {});
-router.get('/:id', (req, res) => {});
-router.put('/:id', (req, res) => {});
-router.delete('/:id', (req, res) => {});
+const service = new MovieService();
+
+router.get('/', async (req, res, next) => {
+  try {
+    const movies = await service.find();
+    res.json(movies);
+  } catch (error) {
+    next(error);
+  }
+});
+router.post(
+  '/',
+  validatorHandler(createMovieSchema, 'body'),
+  async (req, res, next) => {
+    try {
+      const { body } = req;
+      const newMovie = await service.create(body);
+      res.json(newMovie);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+router.get(
+  '/:id',
+  validatorHandler(getMovieSchema, 'params'),
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const movie = await service.findOne(id);
+      res.json(movie);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+router.put(
+  '/:id',
+  validatorHandler(getMovieSchema, 'params'),
+  validatorHandler(updateMovieSchema, 'body'),
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const { body } = req;
+      const movie = await service.update(id, body);
+      res.json(movie);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.delete(
+  '/:id',
+  validatorHandler(getMovieSchema, 'params'),
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      await service.delete(id);
+      res.json(id);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
 module.exports = router;

@@ -13,7 +13,7 @@ const MovieSchema = {
   },
   image: { allowNull: false, type: DataTypes.STRING },
   title: { allowNull: false, type: DataTypes.STRING },
-  qualification: { allowNull: false, type: DataTypes.NUMBER },
+  qualification: { allowNull: false, type: DataTypes.INTEGER },
   createdAt: {
     allowNull: false,
     type: DataTypes.DATE,
