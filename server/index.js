@@ -3,6 +3,7 @@ const cors = require('cors');
 const SwaggerUI = require('swagger-ui-express');
 const SwagerDoC = require('swagger-jsdoc');
 const passport = require('passport');
+const morgan = require('morgan');
 const {
   logErrors,
   errorHandler,
@@ -29,6 +30,7 @@ const options = {
 app.use(cors(options));
 app.use(express.json());
 app.use(passport.initialize());
+app.use(morgan('combined'));
 require('./utils/auth');
 
 const specs = SwagerDoC({
