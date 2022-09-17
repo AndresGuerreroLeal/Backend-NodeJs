@@ -1,4 +1,4 @@
-const { models } = require('./../libs/sequilize');
+const { models } = require('../libs/sequilize');
 
 class GenderService {
   async create(data) {
