@@ -8,8 +8,15 @@ class MovieService {
     return newMovie;
   }
 
+  async addCharacter(data) {
+    const newCharacter = models.MovieCharacter.create(data);
+    return newCharacter;
+  }
+
   async find() {
-    const movies = models.Movie.findAll({ include: ['gender'] });
+    const movies = models.Movie.findAll({
+      include: ['characters', 'gender'],
+    });
     return movies;
   }
 

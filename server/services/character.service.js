@@ -1,7 +1,10 @@
 const { models } = require('../libs/sequilize');
 
 class CharacterService {
-  create() {}
+  async create(data) {
+    const newCharacter = models.Character.create(data);
+    return newCharacter;
+  }
 
   find() {
     const characters = models.Character.findAll({ include: ['movies'] });

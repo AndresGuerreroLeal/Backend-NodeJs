@@ -31,6 +31,17 @@ router.post(
     }
   }
 );
+
+router.post('/add-character', async (req, res, next) => {
+  try {
+    const { body } = req;
+    const newCharacter = await service.addCharacter(body);
+    res.json(newCharacter);
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.get(
   '/:id',
   validatorHandler(getMovieSchema, 'params'),

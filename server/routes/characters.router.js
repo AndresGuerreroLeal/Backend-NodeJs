@@ -14,7 +14,15 @@ router.get('/', async (req, res, next) => {
     next(error);
   }
 });
-router.post('/', (req, res) => {});
+router.post('/', async (req, res, next) => {
+  try {
+    const { body } = req;
+    const newCharacter = await service.create(body);
+    res.json(newCharacter);
+  } catch (error) {
+    next(error);
+  }
+});
 router.get('/:id', (req, res) => {});
 router.put('/:id', (req, res) => {});
 router.delete('/:id', (req, res) => {});
