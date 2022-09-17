@@ -1,13 +1,14 @@
 const boom = require('@hapi/boom');
 const nodemailer = require('nodemailer');
+const bcrypt = require('bcryptjs');
 const { models } = require('../libs/sequilize');
 const { config } = require('../config/config');
 
 class AuthService {
-  login() {}
-
   async register(body) {
-    const rta = await models.User.create(body);
+    const hash = await bcrypt.hash(body.password, 10);
+    const rta = await models.User.create({ ...body, password: hash });
+    delete rta.dataValues.password;
     const transporter = nodemailer.createTransport({
       host: 'smtp.gmail.com',
       port: 465,

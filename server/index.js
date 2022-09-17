@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const SwaggerUI = require('swagger-ui-express');
 const SwagerDoC = require('swagger-jsdoc');
+const passport = require('passport');
 const {
   logErrors,
   errorHandler,
@@ -26,6 +27,9 @@ const options = {
 
 app.use(cors(options));
 app.use(express.json());
+app.use(passport.initialize());
+require('./utils/auth');
+
 const specs = SwagerDoC({
   definition: {
     openapi: '3.0.0',
