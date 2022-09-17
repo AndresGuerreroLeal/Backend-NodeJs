@@ -11,6 +11,8 @@ const config = {
       ? process.env.DB_NAME
       : `${process.env.DB_NAME}-test`,
   dbPort: process.env.DB_PORT,
+  email: process.env.EMAIL,
+  password: process.env.PASSWORD,
 };
 
 module.exports = { config };
