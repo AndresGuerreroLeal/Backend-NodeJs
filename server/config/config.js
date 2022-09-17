@@ -13,6 +13,7 @@ const config = {
   dbPort: process.env.DB_PORT,
   email: process.env.EMAIL,
   password: process.env.PASSWORD,
+  secret: process.env.SECRET,
 };
 
 module.exports = { config };
