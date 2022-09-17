@@ -9,6 +9,7 @@ const {
   boomErrorHandler,
   ormErrorHandler,
 } = require('./middleware/error.handler');
+const { checkApiKey } = require('./middleware/auth.handler');
 
 const routerApi = require('./routes');
 
@@ -48,6 +49,7 @@ const specs = SwagerDoC({
   apis: ['./src/routes*.js'],
 });
 
+app.use(checkApiKey);
 routerApi(app);
 app.use(logErrors);
 app.use(ormErrorHandler);

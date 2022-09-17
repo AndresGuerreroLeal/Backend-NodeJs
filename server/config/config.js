@@ -14,6 +14,7 @@ const config = {
   email: process.env.EMAIL,
   password: process.env.PASSWORD,
   secret: process.env.SECRET,
+  apiKey: process.env.APIKEY
 };
 
 module.exports = { config };
