@@ -9,12 +9,12 @@ const config = {
   dbName:
     process.env.NODE_ENV !== 'test'
       ? process.env.DB_NAME
-      : `${process.env.DB_NAME}-test`,
+      : `${process.env.DB_NAME}_test`,
   dbPort: process.env.DB_PORT,
   email: process.env.EMAIL,
   password: process.env.PASSWORD,
   secret: process.env.SECRET,
-  apiKey: process.env.APIKEY
+  apiKey: process.env.APIKEY,
 };
 
 module.exports = { config };

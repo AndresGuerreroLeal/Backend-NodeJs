@@ -44,14 +44,13 @@ const specs = SwagerDoC({
     },
     servers: [
       {
-        url: 'http://localhost:3000/api/v1',
+        url: 'http://localhost:3004/api/v1',
       },
     ],
   },
-  apis: ['./src/routes*.js'],
+  apis: ['./server/routes/*.js'],
 });
 
-app.use(checkApiKey);
 routerApi(app);
 app.use(logErrors);
 app.use(ormErrorHandler);
@@ -62,6 +61,8 @@ app.use('/docs', SwaggerUI.serve, SwaggerUI.setup(specs));
 
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`Servidor funcionando en puerto ${PORT}`);
 });
+
+module.exports = { app, server };

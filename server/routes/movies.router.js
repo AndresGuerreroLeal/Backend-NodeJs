@@ -12,8 +12,32 @@ const service = new MovieService();
 
 router.get('/', async (req, res, next) => {
   try {
-    const movies = await service.find();
-    res.json(movies);
+    // eslint-disable-next-line prefer-const
+    let options = {
+      include: ['characters', 'gender'],
+      where: {},
+      order: [],
+    };
+
+    const { name, gender, order } = req.query;
+    if (name) {
+      options.where.title = name;
+    }
+
+    if (gender) {
+      options.include[1] = {
+        association: 'gender',
+        as: 'gender',
+        where: { name: gender },
+      };
+    }
+
+    if (order) {
+      options.order = [['title', order]];
+    }
+
+    const AllMovies = await service.find(options);
+    res.json(AllMovies);
   } catch (error) {
     next(error);
   }

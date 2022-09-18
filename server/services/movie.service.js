@@ -13,10 +13,8 @@ class MovieService {
     return newCharacter;
   }
 
-  async find() {
-    const movies = models.Movie.findAll({
-      include: ['characters', 'gender'],
-    });
+  async find(options) {
+    const movies = models.Movie.findAll(options);
     return movies;
   }
 
