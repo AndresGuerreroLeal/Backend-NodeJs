@@ -14,7 +14,6 @@ const MovieCharacterSchema = {
   },
   movieId: {
     field: 'movie_id',
-    allowNull: false,
     type: DataTypes.INTEGER,
     references: {
       model: MOVIE_TABLE,
@@ -25,7 +24,6 @@ const MovieCharacterSchema = {
   },
   characterId: {
     field: 'character_id',
-    allowNull: false,
     type: DataTypes.INTEGER,
     references: {
       model: CHARACTER_TABLE,

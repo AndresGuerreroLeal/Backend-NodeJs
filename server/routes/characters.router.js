@@ -1,37 +1,39 @@
 const router = require('express').Router();
 
 const CharacterService = require('../services/character.service');
-const validatorHandler = require('../middleware/validator.handler');
-const {} = require('../schemas/character.schema');
 
 const service = new CharacterService();
 
 router.get('/', async (req, res, next) => {
-  // eslint-disable-next-line prefer-const
-  let options = {
-    include: ['movies'],
-    where: {},
-  };
-
-  const { name, age, movies } = req.query;
-  if (name) {
-    options.where.name = name;
-  }
-
-  if (age) {
-    options.where.age = age;
-  }
-
-  if (movies) {
-    options.include[0] = {
-      association: 'movies',
-      as: 'movies',
-      where: { id: movies },
+  try {
+    // eslint-disable-next-line prefer-const
+    let options = {
+      include: ['movies'],
+      where: {},
     };
-  }
 
-  const allCharacters = await service.find(options);
-  res.json(allCharacters);
+    const { name, age, movies } = req.query;
+    if (name) {
+      options.where.name = name;
+    }
+
+    if (age) {
+      options.where.age = age;
+    }
+
+    if (movies) {
+      options.include[0] = {
+        association: 'movies',
+        as: 'movies',
+        where: { id: movies },
+      };
+    }
+
+    const allCharacters = await service.find(options);
+    res.json(allCharacters);
+  } catch (error) {
+    next(error);
+  }
 });
 router.post('/', async (req, res, next) => {
   try {
@@ -42,8 +44,34 @@ router.post('/', async (req, res, next) => {
     next(error);
   }
 });
-router.get('/:id', (req, res) => {});
-router.put('/:id', (req, res) => {});
-router.delete('/:id', (req, res) => {});
+router.get('/:id', async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const character = await service.findOne(id);
+    res.json(character);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.put('/:id', async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { body } = req;
+    const character = await service.update(id, body);
+    res.json(character);
+  } catch (error) {
+    next(error);
+  }
+});
+router.delete('/:id', async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    await service.delete(id);
+    res.json(id);
+  } catch (error) {
+    next(error);
+  }
+});
 
 module.exports = router;
