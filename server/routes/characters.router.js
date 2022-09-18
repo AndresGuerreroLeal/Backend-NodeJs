@@ -7,12 +7,31 @@ const {} = require('../schemas/character.schema');
 const service = new CharacterService();
 
 router.get('/', async (req, res, next) => {
-  try {
-    const characters = await service.find();
-    res.json(characters);
-  } catch (error) {
-    next(error);
+  // eslint-disable-next-line prefer-const
+  let options = {
+    include: ['movies'],
+    where: {},
+  };
+
+  const { name, age, movies } = req.query;
+  if (name) {
+    options.where.name = name;
   }
+
+  if (age) {
+    options.where.age = age;
+  }
+
+  if (movies) {
+    options.include[0] = {
+      association: 'movies',
+      as: 'movies',
+      where: { id: movies },
+    };
+  }
+
+  const allCharacters = await service.find(options);
+  res.json(allCharacters);
 });
 router.post('/', async (req, res, next) => {
   try {

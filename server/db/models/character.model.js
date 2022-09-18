@@ -9,6 +9,7 @@ const CharacterSchema = {
     primaryKey: true,
     type: DataTypes.INTEGER,
   },
+  age: { allowNull: false, type: DataTypes.INTEGER },
   image: { allowNull: false, type: DataTypes.STRING },
   name: { allowNull: false, type: DataTypes.STRING },
   weight: { allowNull: false, type: DataTypes.DECIMAL },

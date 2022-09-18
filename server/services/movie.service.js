@@ -4,22 +4,22 @@ const { models } = require('../libs/sequilize');
 
 class MovieService {
   async create(data) {
-    const newMovie = models.Movie.create(data);
+    const newMovie = await models.Movie.create(data);
     return newMovie;
   }
 
   async addCharacter(data) {
-    const newCharacter = models.MovieCharacter.create(data);
+    const newCharacter = await models.MovieCharacter.create(data);
     return newCharacter;
   }
 
   async find(options) {
-    const movies = models.Movie.findAll(options);
+    const movies = await models.Movie.findAll(options);
     return movies;
   }
 
   async findOne(id) {
-    const movie = models.Movie.findByPk(id);
+    const movie = await models.Movie.findByPk(id);
     if (!movie) {
       throw boom.notFound('movie not found');
     }

@@ -1,3 +1,4 @@
+const boom = require('@hapi/boom');
 const { models } = require('../libs/sequilize');
 
 class CharacterService {
@@ -6,16 +7,30 @@ class CharacterService {
     return newCharacter;
   }
 
-  find() {
-    const characters = models.Character.findAll({ include: ['movies'] });
+  find(query) {
+    const characters = models.Character.findAll(query);
     return characters;
   }
 
-  findOne() {}
+  findOne(id) {
+    const character = models.Character.findByPk(id);
+    if (!character) {
+      throw boom.notFound('character not found');
+    }
+    return character;
+  }
 
-  update() {}
+  async update(id, changes) {
+    const character = await this.findOne(id);
+    const rta = character.update(changes);
+    return rta;
+  }
 
-  delete() {}
+  async delete(id) {
+    const character = await this.findOne(id);
+    await character.destroy();
+    return { id };
+  }
 }
 
 module.exports = CharacterService;
